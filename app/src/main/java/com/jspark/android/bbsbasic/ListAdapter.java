@@ -56,7 +56,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             holder.txtTitle.setText(memo.getTitle());
             holder.txtContents.setText(memo.getMemo());
             holder.mCheckBox.setChecked(false);
-            //holder.mCheckBox.setVisibility(View.GONE);
+            holder.mCheckBox.setVisibility(View.GONE);
 
             holder.card.setAnimation(anime);
 
