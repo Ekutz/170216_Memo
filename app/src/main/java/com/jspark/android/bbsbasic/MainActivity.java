@@ -96,6 +96,16 @@ public class MainActivity extends AppCompatActivity implements ListInterface, De
     }
 
     @Override
+    public void delete(int position) throws SQLException {
+        Long positionL = (long)position;
+        memoDao.delete(memoDao.queryForId(positionL));
+
+        loadData();
+        list.setData(datas);
+        list.refresh();
+    }
+
+    @Override
     public void backToList() {
         super.onBackPressed();
     }

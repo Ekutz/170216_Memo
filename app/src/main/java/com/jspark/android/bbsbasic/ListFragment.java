@@ -1,8 +1,10 @@
 package com.jspark.android.bbsbasic;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +16,7 @@ import android.widget.Button;
 import com.jspark.android.bbsbasic.domain.Memo;
 import com.jspark.android.bbsbasic.interfaces.ListInterface;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,11 +29,14 @@ public class ListFragment extends Fragment {
     Context context = null;
     RecyclerView recyclerView;
     ListAdapter listAdapter;
-    Button btnPlus;
+    Button btnPlus, btnSelect;
+    boolean state = true;
 
     private List<Memo> datas = new ArrayList<>();
 
     ListInterface listInterface = null;
+
+    public static List<Integer> deleteList = new ArrayList<>();
 
     public ListFragment() {
     }
@@ -99,9 +105,76 @@ public class ListFragment extends Fragment {
         btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listInterface.goDetail();
+                if(btnPlus.getText().toString().equals("+")) {
+                    listInterface.goDetail();
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("삭제");
+                    builder.setMessage("체크한 메모를 모두 삭제하시겠습니까?");
+                    builder.setCancelable(false).setPositiveButton("예", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if(deleteList.size()!=0) {
+                                for(int item : deleteList) {
+                                    try {
+                                        listInterface.delete(item);
+                                    } catch (SQLException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                setMultiSelectMode(false);
+                            }
+                            deleteList.clear();
+                        }
+                    }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            deleteList.clear();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
             }
         });
+        btnSelect = (Button)view.findViewById(R.id.btnSelect);
+        btnSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(state==true) {
+//                    listAdapter = new ListAdapter(context, datas, false);
+//                    recyclerView.setAdapter(listAdapter);
+//                    btnSelect.setText(R.string.back);
+//                    btnPlus.setText("-");
+//                    state = false;
+                    setMultiSelectMode(true);
+                } else {
+//                    listAdapter = new ListAdapter(context, datas, true);
+//                    recyclerView.setAdapter(listAdapter);
+//                    btnSelect.setText(R.string.edit);
+//                    btnPlus.setText("+");
+//                    state = true;
+                    setMultiSelectMode(false);
+                }
+            }
+        });
+    }
+
+    private void setMultiSelectMode(boolean state) {
+        if(state==true) {
+            listAdapter = new ListAdapter(context, datas, false);
+            recyclerView.setAdapter(listAdapter);
+            btnSelect.setText(R.string.back);
+            btnPlus.setText("-");
+            this.state = false;
+        } else {
+            listAdapter = new ListAdapter(context, datas, true);
+            recyclerView.setAdapter(listAdapter);
+            btnSelect.setText(R.string.edit);
+            btnPlus.setText("+");
+            deleteList.clear();
+            this.state = true;
+        }
     }
 
     public void refresh() {

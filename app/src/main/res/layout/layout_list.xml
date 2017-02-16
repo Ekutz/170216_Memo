@@ -8,6 +8,13 @@
     android:layout_height="match_parent" >
 
     <Button
+        android:id="@+id/btnSelect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/edit"
+        android:textSize="20sp"/>
+
+    <Button
         android:id="@+id/btnPlus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
