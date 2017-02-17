@@ -142,18 +142,8 @@ public class ListFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(state==true) {
-//                    listAdapter = new ListAdapter(context, datas, false);
-//                    recyclerView.setAdapter(listAdapter);
-//                    btnSelect.setText(R.string.back);
-//                    btnPlus.setText("-");
-//                    state = false;
                     setMultiSelectMode(true);
                 } else {
-//                    listAdapter = new ListAdapter(context, datas, true);
-//                    recyclerView.setAdapter(listAdapter);
-//                    btnSelect.setText(R.string.edit);
-//                    btnPlus.setText("+");
-//                    state = true;
                     setMultiSelectMode(false);
                 }
             }

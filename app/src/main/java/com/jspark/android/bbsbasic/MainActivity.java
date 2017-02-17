@@ -180,5 +180,4 @@ public class MainActivity extends AppCompatActivity implements ListInterface, De
     private void getFm() {
         fm = getSupportFragmentManager();
     }
-
 }

@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:class="http://schemas.android.com/apk/res-auto"
     android:background="#FFFFFFFF"
     android:clickable="true"
     tools:context="com.jspark.android.bbsbasic.DetailFragment">
@@ -26,7 +27,8 @@
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/btnSave"
         android:text="DELETE"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:layout_marginRight="8dp"/>
 
     <LinearLayout
         android:id="@+id/imglayout"
@@ -75,14 +77,16 @@
                 android:layout_marginTop="8dp"
                 android:hint="input your Title"
                 android:inputType="text"/>
-            <EditText
+            <com.jspark.android.bbsbasic.cutomEdittext.LinedEdittext
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:id="@+id/editContent"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="match_parent"
                 android:layout_below="@id/editTitle"
                 android:layout_marginTop="8dp"
                 android:gravity="top"
-                android:hint="input your Contents"/>
+                android:hint="input your Contents" />
         </RelativeLayout>
     </ScrollView>
 

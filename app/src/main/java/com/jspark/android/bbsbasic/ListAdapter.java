@@ -7,8 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -50,15 +48,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final Memo memo = datas.get(position);
-        Animation anime = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
         if(state==true) {
             Glide.with(context).load(memo.getImg()).placeholder(R.drawable.default_img).into(holder.imgThumb);
             holder.txtTitle.setText(memo.getTitle());
             holder.txtContents.setText(memo.getMemo());
             holder.mCheckBox.setChecked(false);
             holder.mCheckBox.setVisibility(View.GONE);
-
-            holder.card.setAnimation(anime);
 
             holder.card.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -77,7 +72,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             holder.mCheckBox.setVisibility(View.VISIBLE);
             holder.mCheckBox.setClickable(false);
 
-            holder.card.setAnimation(anime);
             holder.card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -119,6 +113,5 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             txtContents = (TextView)itemView.findViewById(R.id.tvContent);
         }
     }
-
 
 }
